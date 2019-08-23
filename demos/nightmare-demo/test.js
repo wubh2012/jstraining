@@ -34,5 +34,26 @@ describe('test index.html', function() {
       })
   });
 
+  it('点击后标题颜色变成红色', function (done) {
+    var nightmare = Nightmare({ show: true });
+    nightmare
+      .goto('http://127.0.0.1:8080/index.html')
+      .click('h1')
+      .wait(1000)
+      .evaluate(function () {
+        let element = document.querySelector('h1');
+        console.log('style属性', element.style)
+        // let style = window.getComputedStyle(element)
+        // console.log('getcComputedStyle', style)
+        // style.getPropertyValue('color')
+        return element.style.color  
+      })
+      .end()
+      .then(function(color) {
+        expect(color).to.equal('red');
+        done();
+      })
+  });
+
 });
 
